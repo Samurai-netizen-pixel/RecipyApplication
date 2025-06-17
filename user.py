@@ -11,6 +11,8 @@ class User:
         if ingredients is None:
             raise ValueError('Отсутствие ингредиентов при добавлении рецепта пользователю')
 
+        success_message = 'Успешно!'
+
         if len(self.__recipies.__repr__()) > 0:
             for recipy in self.__recipies.__repr__():
                 if recipy.get_id() == id:
@@ -19,11 +21,11 @@ class User:
                 else:
                     recipy = self.__recipy_creator.create(ingredients, id)
                     self.__recipies.add(recipy)
-                    print('Успешно!')
+                    print(success_message)
         else:
             recipy = self.__recipy_creator.create(ingredients, id)
             self.__recipies.add(recipy)
-            print('Успешно!')
+            print(success_message)
 
     def remove_recipy(self, id: str):
         for recipy in self.__recipies.__repr__():
