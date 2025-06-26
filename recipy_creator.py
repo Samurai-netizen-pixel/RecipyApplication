@@ -2,5 +2,5 @@ from recipy import Recipy
 
 
 class RecipyCreator:
-    def create(self, ingredients: list[str], id: str) -> Recipy:
-        return Recipy(ingredients, id)
+    def create(self, ingredients: list[str], id: str, description: str) -> Recipy:
+        return Recipy(ingredients, id, description)

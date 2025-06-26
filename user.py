@@ -7,7 +7,7 @@ class User:
         self.__recipy_creator = RecipyCreator()
         self.__recipies = Database()
 
-    def create_recipy(self, ingredients: list[str], id: str):
+    def create_recipy(self, ingredients: list[str], id: str, description: str):
         if ingredients is None:
             raise ValueError('Отсутствие ингредиентов при добавлении рецепта пользователю')
 
@@ -19,11 +19,11 @@ class User:
                     print('Такой рецепт уже есть')
                     break
                 else:
-                    recipy = self.__recipy_creator.create(ingredients, id)
+                    recipy = self.__recipy_creator.create(ingredients, id, description)
                     self.__recipies.add(recipy)
                     print(success_message)
         else:
-            recipy = self.__recipy_creator.create(ingredients, id)
+            recipy = self.__recipy_creator.create(ingredients, id, description)
             self.__recipies.add(recipy)
             print(success_message)
 
