@@ -8,8 +8,8 @@ class Database:
     def add(self, recipy: Recipy):
         self.__recipies.append(recipy)
 
-    def remove(self, recipy: Recipy):
-        self.__recipies.remove(recipy)
+    def remove(self, selected: Recipy):
+        self.__recipies.remove(selected)
 
     def get_recipies(self) -> list:
         recipies = list(self.__recipies)

@@ -1,4 +1,5 @@
 from database import Database
+from recipy import Recipy
 from recipy_creator import RecipyCreator
 
 
@@ -27,10 +28,8 @@ class User:
             self.__recipies.add(recipy)
             print(success_message)
 
-    def remove_recipy(self, id: str):
-        for recipy in self.__recipies.__repr__():
-            if recipy.get_id() == id:
-                self.__recipies.remove(recipy)
+    def remove_recipy(self, selected: Recipy):
+        self.__recipies.remove(selected)
 
     def get_recipies(self) -> list:
         return self.__recipies.get_recipies()

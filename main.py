@@ -1,6 +1,8 @@
+import tkinter as tk
+
 from application import Application
 
-application = Application('Recipies.txt')
-
-application.try_get_info_from_file()
-application.run()
+root = tk.Tk()
+app = Application('Recipies.txt', root)
+app.t()
+root.mainloop()
