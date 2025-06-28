@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 
-from application_view import ApplicationView
 from file_handler import FileHandler
 from user import User
 
@@ -10,7 +9,6 @@ class Application:
     def __init__(self, file_name: str, main_window):
         self.__user = User()
         self.__file_handler = FileHandler(file_name)
-        self.__application_view = ApplicationView()
         self.__main_window = main_window
 
         main_window.title("To-Do List")
