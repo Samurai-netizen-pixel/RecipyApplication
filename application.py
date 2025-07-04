@@ -2,22 +2,22 @@ import tkinter as tk
 from tkinter import ttk
 
 from file_handler import FileHandler
+from ingredients_window import IngredientsWindow
 from user import User
 
 
 class Application:
     def __init__(self, file_name: str, main_window):
+        self.__ingredients_window = None
         self.__user = User()
         self.__file_handler = FileHandler(file_name)
         self.__main_window = main_window
 
         self.__main_window.title("Recipies")
 
-        self.__ingredients_label = ttk.Label(self.__main_window, text="Enter Ingredients:")
-        self.__ingredients_label.grid(row=1, column=0, padx=5, pady=5)
-
-        self.__ingredients_info_view = ttk.Entry(self.__main_window, width=30)
-        self.__ingredients_info_view.grid(row=1, column=1, padx=5, pady=5)
+        self.__add_ingredients = ttk.Button(self.__main_window, text="Add Ingredients",
+                                            command=self.enter_ingredients)
+        self.__add_ingredients.grid(row=1, column=1, padx=5, pady=5)
 
         self.__description_label = ttk.Label(self.__main_window, text="Enter Description:")
         self.__description_label.grid(row=2, column=0, padx=5, pady=5)
@@ -37,17 +37,19 @@ class Application:
         self.__recipies = tk.Listbox(self.__main_window, width=40)
         self.__recipies.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
 
-    def add_recipy(self):
-        spliter = ','
-        ingredients = self.__ingredients_info_view.get()
-        description = self.__description_info.get()
-        ingredients = ingredients.split(spliter)
+    def enter_ingredients(self):
+        root = tk.Toplevel()
+        self.__ingredients_window = IngredientsWindow(root)
+        root.mainloop()
 
-        if ingredients != None and description != None:
+    def add_recipy(self):
+        ingredients = self.__ingredients_window.get_ingredients()
+        description = self.__description_info.get()
+
+        if ingredients is not None and description is not None:
             recipy = self.__user.create_recipy(ingredients, description)
             self.__recipies.insert(tk.END, recipy.__repr__())
 
-        self.__ingredients_info_view.delete(0, tk.END)
         self.__description_info.delete(0, tk.END)
         print(self.__user.get_recipies())
 
