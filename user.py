@@ -1,5 +1,4 @@
 from database import Database
-from recipy import Recipy
 from recipy_creator import RecipyCreator
 
 
@@ -8,28 +7,19 @@ class User:
         self.__recipy_creator = RecipyCreator()
         self.__recipies = Database()
 
-    def create_recipy(self, ingredients: list[str], id: str, description: str):
+    def create_recipy(self, ingredients: list[str], description: str):
         if ingredients is None:
             raise ValueError('Отсутствие ингредиентов при добавлении рецепта пользователю')
 
-        success_message = 'Успешно!'
+        recipy = self.__recipy_creator.create(ingredients, description)
+        self.__recipies.add(recipy)
+        return recipy
 
-        if len(self.__recipies.__repr__()) > 0:
-            for recipy in self.__recipies.__repr__():
-                if recipy.get_id() == id:
-                    print('Такой рецепт уже есть')
-                    break
-                else:
-                    recipy = self.__recipy_creator.create(ingredients, id, description)
-                    self.__recipies.add(recipy)
-                    print(success_message)
-        else:
-            recipy = self.__recipy_creator.create(ingredients, id, description)
-            self.__recipies.add(recipy)
-            print(success_message)
-
-    def remove_recipy(self, selected: Recipy):
-        self.__recipies.remove(selected)
+    def remove_recipy(self, selected: int):
+        for recipy in self.get_recipies():
+            if self.get_recipies().index(recipy) == selected:
+                self.__recipies.remove(recipy)
+                break
 
     def get_recipies(self) -> list:
         return self.__recipies.get_recipies()
@@ -41,4 +31,3 @@ class User:
             recipies_info.append(recipy.__repr__())
 
         return recipies_info
-
