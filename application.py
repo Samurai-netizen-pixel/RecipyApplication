@@ -41,8 +41,8 @@ class Application:
         self.__delete_button = ttk.Button(self.__main_window, text="Delete", command=self.delete_recipy)
         self.__delete_button.grid(row=6, column=1)
 
-        self.__recipies = tk.Listbox(self.__main_window, width=40)
-        self.__recipies.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+        self.__recipies_listbox = tk.Listbox(self.__main_window, width=40)
+        self.__recipies_listbox.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
 
     def make_ingredients_window(self):
         root = tk.Toplevel()
@@ -67,16 +67,16 @@ class Application:
         print(self.__user.get_recipies())
 
     def delete_recipy(self):
-        selected_recipy = self.__recipies.curselection()
+        selected_recipy = self.__recipies_listbox.curselection()
 
         if selected_recipy:
-            selected_index = self.__application_operations.get_selected_index(selected_recipy)
-            self.__user.remove_recipy(selected_index)
+            selected_recipy_index = self.__application_operations.get_selected_index(selected_recipy)
+            self.__user.remove_recipy(selected_recipy_index)
             self.update_listbox()
             print(self.__user.get_recipies())
 
     def make_edit_window(self):
-        selected_recipy_index = self.__recipies.curselection()
+        selected_recipy_index = self.__recipies_listbox.curselection()
 
         if selected_recipy_index:
             selected_recipy_info = self.get_info_for_editing(selected_recipy_index)
@@ -89,31 +89,31 @@ class Application:
         self.__file_handler.write_recipies(recipies)
 
     def insert_recipies_from_file(self):
-            main_splitter = '\n'
-            first_splitter = '['
-            second_splitter = ']'
-            third_splitter = ': '
-            recipies_info = self.__file_handler.read_recipies()
+        main_splitter = '\n'
+        first_splitter = '['
+        second_splitter = ']'
+        third_splitter = ': '
+        recipies_info = self.__file_handler.read_recipies()
 
-            if recipies_info:
-                recipies_list_info = recipies_info.split(main_splitter)
+        if recipies_info:
+            recipies_list_info = recipies_info.split(main_splitter)
 
-                for recipy_info in recipies_list_info:
-                    first_splitter_index = recipy_info.find(first_splitter)
-                    second_splitter_index = recipy_info.find(second_splitter)
-                    third_splitter_index = recipy_info.rfind(third_splitter)
+            for recipy_info in recipies_list_info:
+                first_splitter_index = recipy_info.find(first_splitter)
+                second_splitter_index = recipy_info.find(second_splitter)
+                third_splitter_index = recipy_info.rfind(third_splitter)
 
-                    ingredients_info_list = recipy_info[first_splitter_index + 1: second_splitter_index].strip().split(
-                        ', ')
-                    description = recipy_info[third_splitter_index + 2:]
-                    ingredients = []
+                ingredients_info_list = recipy_info[first_splitter_index + 1: second_splitter_index].strip().split(
+                    ', ')
+                description = recipy_info[third_splitter_index + 2:]
+                ingredients = []
 
-                    for ingredient_info in ingredients_info_list:
-                        ingredient = self.__user.create_ingredient(ingredient_info)
-                        ingredients.append(ingredient)
+                for ingredient_info in ingredients_info_list:
+                    ingredient = self.__user.create_ingredient(ingredient_info)
+                    ingredients.append(ingredient)
 
-                    recipy = self.__user.create_recipy(ingredients, description)
-                    self.__recipies.insert(tk.END, recipy)
+                recipy = self.__user.create_recipy(ingredients, description)
+                self.__recipies_listbox.insert(tk.END, recipy)
 
     def get_info_for_editing(self, selected_recipy_index):
         selected_recipy_info = self.__application_operations.make_info_for_editing(selected_recipy_index)
@@ -121,7 +121,7 @@ class Application:
         return selected_recipy_info
 
     def update_listbox(self):
-        self.__recipies.delete(0, tk.END)
+        self.__recipies_listbox.delete(0, tk.END)
 
         for recipy in self.__user.get_recipies_info():
-            self.__recipies.insert(tk.END, recipy)
+            self.__recipies_listbox.insert(tk.END, recipy)

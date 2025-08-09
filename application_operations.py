@@ -6,8 +6,8 @@ class ApplicationOperations:
         self.__user = user
 
     def make_info_for_editing(self, selected_recipy_index):
-        selected_index = self.get_selected_index(selected_recipy_index)
-        selected_recipy = self.__user.get_recipies()[selected_index]
+        selected_recipy_index = self.get_selected_index(selected_recipy_index)
+        selected_recipy = self.__user.get_recipies()[selected_recipy_index]
         selected_recipy = selected_recipy.__repr__()
 
         first_splitter = ': '
@@ -22,8 +22,8 @@ class ApplicationOperations:
 
         return selected_recipy_info
 
-    def get_selected_index(self, selected: tuple):
-        selected_info = map(str, selected)
-        selected_index_info = ''.join(selected_info)
-        selected_index = int(selected_index_info)
-        return selected_index
+    def get_selected_index(self, selected_recipy: tuple):
+        selected_recipy_info = map(str, selected_recipy)
+        selected_recipy_index_info = ''.join(selected_recipy_info)
+        selected_recipy_index = int(selected_recipy_index_info)
+        return selected_recipy_index

@@ -18,9 +18,9 @@ class User:
         self.__database.add_recipy(recipy)
         return recipy
 
-    def remove_recipy(self, selected: int):
+    def remove_recipy(self, selected_recipy_index: int):
         for recipy in self.get_recipies():
-            if self.get_recipies().index(recipy) == selected:
+            if self.get_recipies().index(recipy) == selected_recipy_index:
                 self.__database.remove_recipy(recipy)
                 break
 
