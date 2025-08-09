@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 
 from application_operations import ApplicationOperations
-from ingredient_creator import IngredientCreator
 from user import User
 
 
@@ -28,12 +27,16 @@ class IngredientsWindow:
         self.__ingredients.grid(row=7, column=0, columnspan=2, padx=5, pady=5)
 
     def add_ingredient(self):
-        ingredient_info = self.__ingredients_info_view.get()
-        self.__ingredients.insert(tk.END, ingredient_info)
+        ingredient_info = self.__ingredients_info_view.get().strip()
+
+        if ingredient_info:
+            self.__ingredients.insert(tk.END, ingredient_info)
+
         self.__ingredients_info_view.delete(0, tk.END)
 
     def delete_ingredient(self):
         selected_ingredient = self.__ingredients.curselection()
+
         if selected_ingredient:
             self.__ingredients.delete(selected_ingredient)
 

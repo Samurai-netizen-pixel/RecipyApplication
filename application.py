@@ -59,7 +59,7 @@ class Application:
 
         description = self.__description_info.get()
 
-        if ingredients is not None and description is not None:
+        if ingredients and description:
             self.__user.create_recipy(ingredients_list, description)
             self.update_listbox()
 
@@ -68,6 +68,7 @@ class Application:
 
     def delete_recipy(self):
         selected_recipy = self.__recipies.curselection()
+
         if selected_recipy:
             selected_index = self.__application_operations.get_selected_index(selected_recipy)
             self.__user.remove_recipy(selected_index)
@@ -88,7 +89,6 @@ class Application:
         self.__file_handler.write_recipies(recipies)
 
     def insert_recipies_from_file(self):
-        try:
             main_splitter = '\n'
             first_splitter = '['
             second_splitter = ']'
@@ -114,8 +114,6 @@ class Application:
 
                     recipy = self.__user.create_recipy(ingredients, description)
                     self.__recipies.insert(tk.END, recipy)
-        except:
-            print(0)
 
     def get_info_for_editing(self, selected_recipy_index):
         selected_recipy_info = self.__application_operations.make_info_for_editing(selected_recipy_index)
@@ -124,5 +122,6 @@ class Application:
 
     def update_listbox(self):
         self.__recipies.delete(0, tk.END)
+
         for recipy in self.__user.get_recipies_info():
             self.__recipies.insert(tk.END, recipy)

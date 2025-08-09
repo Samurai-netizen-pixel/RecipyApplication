@@ -25,15 +25,20 @@ class EditWindow:
     def confirm_editing(self):
         new_recipy = self.__edit_entry.get()
         new_recipy = new_recipy.split(';')
-        ingredients = new_recipy[0].split(', ')
+        ingredients = new_recipy[0][1:-1]
+        new_ingredients = []
+
+        for ingredient in ingredients:
+            ingredient = self.__user.create_ingredient(ingredient)
+            new_ingredients.append(ingredient)
+
         description = new_recipy[1]
 
         selected_info = map(str, self.__selected_recipy_index)
         selected_index_info = ''.join(selected_info)
         selected_index = int(selected_index_info)
 
-        recipies = self.__user.get_recipies()
-        recipy = self.__recipy_creator.create(ingredients, description)
-        recipies.pop(selected_index)
-        recipies.append(recipy)
+        self.__user.create_recipy(new_ingredients, description)
+        self.__user.remove_recipy(selected_index)
         self.__edit_window.destroy()
+
