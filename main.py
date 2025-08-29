@@ -1,8 +1,12 @@
-import tkinter as tk
+from recipe_book_view import RecipeBookView
+from recipe_book_viewmodel import RecipeBookViewModel
 
-from application import Application
 
-root = tk.Tk()
-app = Application('Recipies.txt', root)
-app.insert_recipies_from_file()
-root.mainloop()
+def main():
+    viewmodel = RecipeBookViewModel()
+    view = RecipeBookView(viewmodel)
+    view.mainloop()
+
+
+if __name__ == "__main__":
+    main()
