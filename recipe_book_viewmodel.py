@@ -43,7 +43,6 @@ class RecipeBookViewModel:
         selected_recipes = [recipe for recipe in self.__recipes if recipe.get_name() in selected_recipe_names]
 
         for recipe in selected_recipes:
-
             for ingredient in recipe.get_ingredients():
                 item_name = ingredient.get_name().lower()
 
