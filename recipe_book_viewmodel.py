@@ -1,36 +1,34 @@
 from ingredient import Ingredient
 from recipe import Recipe
+from recipe_book_model import RecipeBookModel
 from recipe_view_model import RecipeViewModel
 
 
 class RecipeBookViewModel:
-    def __init__(self):
-        self.__recipes: list[Recipe] = []
+    def __init__(self, recipe_book_model: RecipeBookModel):
+        self.__recipe_book_model = recipe_book_model
         self.__filtered_recipes: list[Recipe] = []
         self.__current_view_recipes: list[RecipeViewModel] = []
 
     def add_recipe(self, recipe: Recipe):
-        self.__recipes.append(recipe)
+        self.__recipe_book_model.add_recipe(recipe)
         self.update_filtered_recipes()
         self.update_current_view()
 
-    def get_all_recipes(self) -> list[Recipe]:
-        return self.__recipes
-
     def search_by_ingredient(self, ingredient_name: str):
         if not ingredient_name:
-            self.__filtered_recipes = self.__recipes
+            self.__filtered_recipes = self.__recipe_book_model.get_all_recipes()
         else:
             self.__filtered_recipes = []
 
-            for recipe in self.__recipes:
+            for recipe in self.__recipe_book_model.get_all_recipes():
                 if recipe.has_ingredient(ingredient_name):
                     self.__filtered_recipes.append(recipe)
 
         self.update_current_view()
 
     def update_filtered_recipes(self):
-        self.__filtered_recipes = self.__recipes
+        self.__filtered_recipes = self.__recipe_book_model.get_all_recipes()
 
     def update_current_view(self):
         self.__current_view_recipes = [RecipeViewModel(recipe) for recipe in self.__filtered_recipes]
@@ -40,7 +38,7 @@ class RecipeBookViewModel:
 
     def generate_shopping_list(self, selected_recipe_names: list[str]) -> str:
         shopping_list_items = {}
-        selected_recipes = [recipe for recipe in self.__recipes if recipe.get_name() in selected_recipe_names]
+        selected_recipes = [recipe for recipe in self.__recipe_book_model.get_all_recipes() if recipe.get_name() in selected_recipe_names]
 
         for recipe in selected_recipes:
             for ingredient in recipe.get_ingredients():
