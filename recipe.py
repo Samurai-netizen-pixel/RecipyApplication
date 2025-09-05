@@ -15,8 +15,7 @@ class Recipe:
 
     def has_ingredient(self, ingredient_name: str) -> bool:
         for ingredient in self.__ingredients:
-
-            if ingredient.get_name().lower() == ingredient_name:
+            if ingredient.get_name().lower().strip() == ingredient_name.lower().strip():
                 return True
 
     def get_name(self):
